@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 
 import App from "../App";
 
-describe("App Rendering", () => {
+describe("App Rendering Test", () => {
   test("화면에 타이틀이 정상적으로 떠야한다", () => {
     render(<App />);
     const linkElement = screen.getByText(/TODO List/i);
