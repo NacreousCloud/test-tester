@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -12,6 +12,13 @@ function App() {
   const handleAddTodo = () => {
     setTodoList((c) => [...c, inputText]);
     setInputText("");
+  };
+
+  const handleDeleteTodo = (e: MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    setTodoList((c) =>
+      c.filter((_, index) => index !== Number(target.dataset["id"])),
+    );
   };
 
   return (
@@ -34,8 +41,13 @@ function App() {
       </div>
       <div>
         <ul id="todo-list" data-testid="todo-list">
-          {todoList.map((todo) => (
-            <li>{todo}</li>
+          {todoList.map((todo, index) => (
+            <li>
+              {todo}
+              <button data-id={index} onClick={handleDeleteTodo}>
+                삭제
+              </button>
+            </li>
           ))}
         </ul>
       </div>
