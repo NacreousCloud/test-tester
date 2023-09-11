@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 import App from "../App";
 import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 
 describe("App Rendering Test", () => {
   test("화면에 타이틀이 정상적으로 떠야한다", () => {
@@ -46,8 +47,9 @@ describe("TODO Function Test - Add", () => {
     userEvent.type(inputElement, todo);
     inputElement.blur();
 
-    buttonElement.click();
-
+    act(() => {
+      buttonElement.click();
+    });
     expect(listElement).toHaveTextContent(todo);
   });
 
@@ -67,29 +69,13 @@ describe("TODO Function Test - Add", () => {
     const { inputElement, buttonElement } = init();
 
     const todo = "TODO 1";
-
     inputElement.focus();
     userEvent.type(inputElement, todo);
     inputElement.blur();
 
-    buttonElement.click();
-
-    expect(inputElement).toHaveValue("");
-  });
-});
-
-  test("추가 버튼을 누른뒤 추가된 TODO는 input에 입력한 값과 동일해야 한다", () => {});
-
-  test("추가 버튼을 누르면 input이 초기화 되어야 한다", () => {
-    const { inputElement, buttonElement } = init();
-
-    const todo = "TODO 1";
-
-    inputElement.focus();
-    userEvent.type(inputElement, todo);
-    inputElement.blur();
-
-    buttonElement.click();
+    act(() => {
+      buttonElement.click();
+    });
 
     expect(inputElement).toHaveValue("");
   });
