@@ -51,10 +51,22 @@ describe("TODO Function Test - Add", () => {
     expect(listElement).toHaveTextContent(todo);
   });
 
-  test("빈값을 입력하면 추가되지 않아야 한다", () => {
-    const { inputElement, buttonElement, listElement } = init();
+  test("아무것도 입력하지않으면 추가되지 않아야 한다", () => {
+    const { buttonElement, listElement } = init();
 
-    const todo = "";
+    buttonElement.click();
+    expect(listElement).toBeEmptyDOMElement();
+  });
+
+  test("빈값을 입력하면 버튼이 disabled 되어야한다.", () => {
+    const { buttonElement } = init();
+    expect(buttonElement).toBeDisabled();
+  });
+
+  test("추가 버튼을 누르면 input이 초기화 되어야 한다", () => {
+    const { inputElement, buttonElement } = init();
+
+    const todo = "TODO 1";
 
     inputElement.focus();
     userEvent.type(inputElement, todo);
@@ -62,8 +74,9 @@ describe("TODO Function Test - Add", () => {
 
     buttonElement.click();
 
-    expect(listElement).not.toHaveTextContent(todo);
+    expect(inputElement).toHaveValue("");
   });
+});
 
   test("추가 버튼을 누른뒤 추가된 TODO는 input에 입력한 값과 동일해야 한다", () => {});
 
