@@ -1,6 +1,19 @@
+import { ChangeEvent, useState } from "react";
 import "./App.css";
 
 function App() {
+  const [inputText, setInputText] = useState("");
+  const [todoList, setTodoList] = useState<string[]>([]);
+
+  const handleInputText = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+  };
+
+  const handleAddTodo = () => {
+    setTodoList((c) => [...c, inputText]);
+    setInputText("");
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -12,11 +25,19 @@ function App() {
           placeholder="할 일을 입력해주세요"
           id="todo-input"
           name="todo-input"
+          value={inputText}
+          onChange={handleInputText}
         />
-        <button>추가</button>
+        <button onClick={handleAddTodo} disabled={!inputText}>
+          추가
+        </button>
       </div>
       <div>
-        <ul id="todo-list" data-testid="todo-list"></ul>
+        <ul id="todo-list" data-testid="todo-list">
+          {todoList.map((todo) => (
+            <li>{todo}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
