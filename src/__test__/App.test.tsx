@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
-import App from "../App";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
+import App from "../App";
 
 describe("App Rendering Test", () => {
   test("화면에 타이틀이 정상적으로 떠야한다", () => {
@@ -78,5 +78,70 @@ describe("TODO Function Test - Add", () => {
     });
 
     expect(inputElement).toHaveValue("");
+  });
+});
+
+describe("TODO Function Test - Delete", () => {
+  const init = () => {
+    render(<App />);
+    const inputElement = screen.getByPlaceholderText(/할 일을 입력해주세요/i);
+    const buttonElement = screen.getByText(/추가/i);
+    const listElement = screen.getByTestId("todo-list");
+    return { inputElement, buttonElement, listElement };
+  };
+  const addTodo = (name: string) => {
+    const inputElement = screen.getByPlaceholderText(/할 일을 입력해주세요/i);
+    const buttonElement = screen.getByText(/추가/i);
+
+    const todoName1 = name;
+    inputElement.focus();
+    userEvent.type(inputElement, todoName1);
+    inputElement.blur();
+    act(() => buttonElement.click());
+  };
+
+  test("추가된 TODO 항목에 삭제 버튼이 있어야한다", () => {
+    init();
+
+    addTodo("TODO 1");
+    const deleteButton = screen.getByText("삭제");
+    expect(deleteButton).toBeInTheDocument();
+  });
+
+  test("삭제 버튼을 누르면 TODO 항목이 삭제되어야한다.", () => {
+    init();
+
+    addTodo("TODO 1");
+    const deleteButton = screen.getByText("삭제");
+
+    expect(deleteButton).toBeInTheDocument();
+
+    act(() => deleteButton.click());
+
+    expect(screen.queryByText("TODO 1")).not.toBeInTheDocument();
+  });
+
+  test("TODO 항목 개수 만큼 삭제 버튼이 있어야한다", () => {
+    init();
+
+    addTodo("TODO 1");
+    addTodo("TODO 2");
+
+    expect(screen.getAllByText("삭제")).toHaveLength(2);
+  });
+
+  test("삭제 버튼을 누르면 정확한 위치의 TODO 항목이 삭제되어야한다", () => {
+    init();
+
+    addTodo("TODO 1");
+    addTodo("TODO 2");
+    addTodo("TODO 3");
+
+    expect(screen.getAllByText("삭제")).toHaveLength(3);
+
+    const deleteButton = screen.getAllByText("삭제")[1];
+    act(() => deleteButton.click());
+
+    expect(screen.queryByText("TODO 2")).not.toBeInTheDocument();
   });
 });
