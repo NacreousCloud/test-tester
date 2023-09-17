@@ -1,5 +1,8 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import "./App.css";
+import { TodoItem } from "./components/TodoItem";
+import TodoInput from "./components/TodoInput";
+import Button from "./components/Button";
 
 function App() {
   const [inputText, setInputText] = useState("");
@@ -23,31 +26,19 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header>
         <h1>TODO List</h1>
       </header>
       <div>
-        <input
-          type="text"
-          placeholder="할 일을 입력해주세요"
-          id="todo-input"
-          name="todo-input"
-          value={inputText}
-          onChange={handleInputText}
-        />
-        <button onClick={handleAddTodo} disabled={!inputText}>
+        <TodoInput {...{ inputText, handleInputText }} />
+        <Button onClick={handleAddTodo} disabled={!inputText}>
           추가
-        </button>
+        </Button>
       </div>
       <div>
         <ul id="todo-list" data-testid="todo-list">
-          {todoList.map((todo, index) => (
-            <li>
-              {todo}
-              <button data-id={index} onClick={handleDeleteTodo}>
-                삭제
-              </button>
-            </li>
+          {todoList.map((title, index) => (
+            <TodoItem key={index} {...{ title, index, handleDeleteTodo }} />
           ))}
         </ul>
       </div>
