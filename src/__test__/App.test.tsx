@@ -34,7 +34,7 @@ describe("TODO Function Test - Add", () => {
   const init = () => {
     render(<App />);
     const inputElement = screen.getByPlaceholderText(/할 일을 입력해주세요/i);
-    const buttonElement = screen.getByText(/추가/i);
+    const buttonElement = screen.getByTestId("add");
     const listElement = screen.getByTestId("todo-list");
     return { inputElement, buttonElement, listElement };
   };
