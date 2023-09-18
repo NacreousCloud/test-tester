@@ -26,10 +26,7 @@ const TodoTable = () => {
   return (
     <>
       <div>
-        <TodoInput {...{ inputText, handleInputText }} />
-        <Button onClick={handleAddTodo} disabled={!inputText} data-testid="add">
-          추가
-        </Button>
+        <TodoInput {...{ inputText, handleInputText, handleAddTodo }} />
       </div>
       <div>
         <ul id="todo-list" data-testid="todo-list">
