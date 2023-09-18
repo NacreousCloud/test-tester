@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
   moduleNameMapper: {
-    "^.+\\.svg$": "jest-svg-transformer",
+    "^.+\\.svg$": "jest-transformer-svg",
     "^src/(.*)$": "<rootDir>/src/$1",
     "^.+\\.(css|less|scss|otf)$": "babel-jest",
   },
