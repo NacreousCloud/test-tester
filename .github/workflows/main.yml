@@ -5,7 +5,7 @@ on:
     
 jobs:
   noti:
-    runs-on: test
+    runs-on: self-hosted
     steps:
       - name: action-swit
         uses: roharon/action-swit@v1
