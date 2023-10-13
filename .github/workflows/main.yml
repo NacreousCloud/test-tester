@@ -1,11 +1,17 @@
-{
-- name: action-swit
-  # You may pin to the exact commit or the version.
-  # uses: roharon/action-swit@5baeb0597925d38a608e02a73ad64f2c9f87e681
-  uses: roharon/action-swit@v1
-  with:
-    # Your Swit app's webhooks url
-    webhooks_url: https://hook.swit.io/chat/23100807572852GQNW7O/FRsgpX3c9O2ziw8NcYeO?organization_id=23091405460602C84JVR
-    # Message that you want
-    message: # optional, default is 🏷 ${{ job.status }} ${{ github.sha }} - by ${{ github.actor }}
-}
+
+on:
+  pull_request:
+    branches: ["develop"]
+    
+jobs:
+  noti:
+    runs-on: test
+    steps:
+      - name: action-swit
+        uses: roharon/action-swit@v1
+        with:
+          # Your Swit app's webhooks url
+          webhooks_url: https://hook.swit.io/chat/23100807572852GQNW7O/FRsgpX3c9O2ziw8NcYeO?organization_id=23091405460602C84JVR
+          # Message that you want
+          message: 🏷 ${{ job.status }} ${{ github.sha }} - by ${{ github.actor }}
+
