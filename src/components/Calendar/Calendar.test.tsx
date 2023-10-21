@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import TodoCalendar from ".";
 import userEvent from "@testing-library/user-event";
 import { getDaysOfMonth, monthAfter, monthBefore } from "../../utils/date";
+import { act } from "react-dom/test-utils";
 
 const getRandomDate = (
   dateArr: HTMLElement[],
@@ -30,7 +31,7 @@ describe("Calendar", () => {
   it("render and mark today first", () => {
     render(<TodoCalendar />);
     const today = new Date().getDate();
-    const domToday = screen.getByTestId(`day_${today}`);
+    const domToday = screen.queryByTestId(`day_${today}`);
 
     expect(domToday).toHaveClass("on");
   });
@@ -50,9 +51,9 @@ describe("Calendar", () => {
   it("should mark to clicked day", () => {
     render(<TodoCalendar />);
     const today = new Date().getDate();
-    const dates = screen.getAllByTestId("day_", { exact: false });
+    const dates = screen.queryAllByTestId("day_", { exact: false });
 
-    const domToday = screen.getByTestId(`day_${today}`);
+    const domToday = screen.queryByTestId(`day_${today}`);
     expect(domToday).toHaveClass("on");
 
     const someRandomDay = getRandomDate(dates, today);
