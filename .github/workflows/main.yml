@@ -5,7 +5,7 @@ on:
     
 jobs:
   noti:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: action-swit
         uses: roharon/action-swit@v1
