@@ -5,7 +5,7 @@ on:
     
 jobs:
   noti:
-    runs-on: self-hosted
+    runs-on: macos-latest
     steps:
       - name: action-swit
         uses: roharon/action-swit@v1
